@@ -81,6 +81,9 @@ searchBar.addEventListener("submit", (event) => {
   const formData = new FormData(event.target);
   const searchText = Object.fromEntries(formData);
   query = searchText.query;
+
+  // Auf Seite 1 zurücksetzen
+  page = 1;
   // neu laden mit Suchwort
   fetchCharacters(page, query);
 
