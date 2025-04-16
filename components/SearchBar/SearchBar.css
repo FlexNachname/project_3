@@ -18,6 +18,11 @@
 .search-bar__button {
   border: none;
   background-color: transparent;
+  cursor: pointer;
+}
+
+.search-bar__button:active {
+  transform: scale(1.3);
 }
 
 .search-bar__input:focus {
@@ -27,3 +32,4 @@
 .search-bar__icon {
   width: 20px;
 }
+

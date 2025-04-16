@@ -8,13 +8,16 @@ let query = "";
 const searchBarContainer = document.querySelector(
   '[data-js="search-bar-container"]'
 );
-const searchBar = document.querySelector('[data-js="search-bar"]');
-const navigation = document.querySelector('[data-js="navigation"]');
-const pagination = document.querySelector('[data-js="pagination"]');
 
+const searchBar = document.querySelector('[data-js="search-bar"]');
+//const navigation = document.querySelector('[data-js="navigation"]');
+const pagination = document.querySelector('[data-js="pagination"]');
 const cardContainer = document.querySelector('[data-js="card-container"]');
 const prevButton = document.querySelector('[data-js="button-prev"]');
 const nextButton = document.querySelector('[data-js="button-next"]');
+
+showSearchIcon();
+fetchCharacters(page, "");
 
 async function fetchCharacters(currentPage, searchQuery = "") {
   const response = await fetch(
@@ -47,6 +50,22 @@ async function fetchCharacters(currentPage, searchQuery = "") {
   }
 }
 
+// Funktionen zum auswechseln der jeweiligen Icons (Suche & Suchergebnis zurücksetzen)
+
+function showSearchIcon() {
+  const searchIcon = document.querySelector(".search-bar__icon");
+  searchIcon.src = "assets/magnifying-glass.png"; // Icon austauschen
+  searchIcon.alt = "search for character"; // Alt-Text anpassen
+  searchIcon.parentElement.setAttribute("aria-label", "search for character");
+}
+
+function showResetIcon() {
+  const searchIcon = document.querySelector(".search-bar__icon");
+  searchIcon.src = "assets/xmark-solid.svg"; // Icon austauschen
+  searchIcon.alt = "reset search"; // Alt-Text anpassen
+  searchIcon.parentElement.setAttribute("aria-label", "reset search");
+}
+
 prevButton.addEventListener("click", () => {
   if (page > 1) {
     page--;
@@ -72,8 +91,6 @@ nextButton.addEventListener("click", () => {
   }
 });
 
-fetchCharacters(page, "");
-
 searchBar.addEventListener("submit", (event) => {
   // verhindert Reload
   event.preventDefault();
@@ -87,8 +104,11 @@ searchBar.addEventListener("submit", (event) => {
   // neu laden mit Suchwort
   fetchCharacters(page, query);
 
+  if (query === "") {
+    showSearchIcon();
+  } else {
+    showResetIcon();
+  }
+
   searchBar.reset();
 });
-
-// Nicht benötigt?
-//const query = formData.get("query").trim();
