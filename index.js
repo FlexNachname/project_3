@@ -3,8 +3,23 @@ import { CharacterCard } from "./components/CharacterCard/CharacterCard.js";
 async function fetchCharacters() {
   const response = await fetch("https://rickandmortyapi.com/api/character");
   const data = await response.json();
-  console.log(data);
+
+  // Karte anzeigen (leer)
+  cardContainer.innerHTML = "";
+
+  for (const character of data.results) {
+    const card = CharacterCard(
+      character.image,
+      character.name,
+      character.status,
+      character.type,
+      character.episode.length
+    );
+    cardContainer.appendChild(card);
+  }
 }
+
+fetchCharacters();
 
 const cardContainer = document.querySelector('[data-js="card-container"]');
 const searchBarContainer = document.querySelector(
@@ -22,4 +37,4 @@ const page = 1;
 const searchQuery = "";
 
 //cardContainer.innerHTML = "";
-cardContainer.append(CharacterCard());
+// cardContainer.append(CharacterCard());
